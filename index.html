@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Modern Solitaire - Beautiful implementation of classic Klondike Solitaire with smooth gameplay">
+    <meta name="keywords" content="solitaire, klondike, card game, javascript, html5">
+    <meta name="author" content="Your Name">
+    
+    <title>Modern Solitaire - Classic Card Game</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🃏</text></svg>">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Modern Solitaire">
+    <meta property="og:description" content="Beautiful implementation of classic Klondike Solitaire">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://your-username.github.io/modern-solitaire">
+</head>
+<body>
+    <div class="game-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="game-info">
+                <div class="info-item">
+                    <div class="info-label">Score</div>
+                    <div class="info-value" id="score">0</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Time</div>
+                    <div class="info-value" id="timer">00:00</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Moves</div>
+                    <div class="info-value" id="moves">0</div>
+                </div>
+            </div>
+            <nav class="controls">
+                <button class="btn btn-secondary" onclick="showGameModes()" aria-label="Start new game">New Game</button>
+                <button class="btn btn-secondary" onclick="undo()" aria-label="Undo last move">Undo</button>
+                <button class="btn btn-secondary" onclick="hint()" aria-label="Get hint">Hint</button>
+                <button class="btn btn-primary" onclick="autoComplete()" aria-label="Auto-complete game">Auto-Complete</button>
+            </nav>
+        </header>
+
+        <!-- Game Board -->
+        <main class="game-board">
+            <div class="top-row">
+                <div class="stock-waste">
+                    <div class="pile stock" id="stock" onclick="drawCard()" aria-label="Stock pile - click to draw cards">
+                        <div class="card face-down" style="position: relative;"></div>
+                    </div>
+                    <div class="pile waste" id="waste" aria-label="Waste pile"></div>
+                </div>
+                <div class="foundations">
+                    <div class="pile foundation" data-suit="hearts" ondrop="drop(event)" ondragover="allowDrop(event)" aria-label="Hearts foundation">♥</div>
+                    <div class="pile foundation" data-suit="diamonds" ondrop="drop(event)" ondragover="allowDrop(event)" aria-label="Diamonds foundation">♦</div>
+                    <div class="pile foundation" data-suit="clubs" ondrop="drop(event)" ondragover="allowDrop(event)" aria-label="Clubs foundation">♣</div>
+                    <div class="pile foundation" data-suit="spades" ondrop="drop(event)" ondragover="allowDrop(event)" aria-label="Spades foundation">♠</div>
+                </div>
+            </div>
+
+            <div class="tableau">
+                <div class="tableau-column" data-column="0" ondrop="drop(event)" ondragover="allowDrop(event)" aria-label="Tableau column 1"></div>
+                <div class="tableau-column" data-column="1" ondrop="drop(event)" ondragover="allowDrop(event)" aria-label="Tableau column 2"></div>
+                <div class="tableau-column" data-column="2" ondrop="drop(event)" ondragover="allowDrop(event)" aria-label="Tableau column 3"></div>
+                <div class="tableau-column" data-column="3" ondrop="drop(event)" ondragover="allowDrop(event)" aria-label="Tableau column 4"></div>
+                <div class="tableau-column" data-column="4" ondrop="drop(event)" ondragover="allowDrop(event)" aria-label="Tableau column 5"></div>
+                <div class="tableau-column" data-column="5" ondrop="drop(event)" ondragover="allowDrop(event)" aria-label="Tableau column 6"></div>
+                <div class="tableau-column" data-column="6" ondrop="drop(event)" ondragover="allowDrop(event)" aria-label="Tableau column 7"></div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal" id="gameModeModal" role="dialog" aria-labelledby="gameModeTitle" aria-hidden="true">
+        <div class="modal-content">
+            <h2 id="gameModeTitle">Select Game Mode</h2>
+            <p>Choose your preferred solitaire variant:</p>
+            <div class="game-modes">
+                <button class="mode-btn active" onclick="selectGameMode('klondike')">Klondike</button>
+                <button class="mode-btn" onclick="selectGameMode('spider')">Spider</button>
+                <button class="mode-btn" onclick="selectGameMode('freecell')">FreeCell</button>
+            </div>
+            <div class="controls">
+                <button class="btn btn-primary" onclick="startNewGame()">Start Game</button>
+                <button class="btn btn-secondary" onclick="hideGameModes()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="victoryModal" role="dialog" aria-labelledby="victoryTitle" aria-hidden="true">
+        <div class="modal-content">
+            <h2 id="victoryTitle">🎉 Congratulations!</h2>
+            <p>You won the game!</p>
+            <div id="finalStats" aria-live="polite"></div>
+            <div class="controls">
+                <button class="btn btn-primary" onclick="showGameModes()">New Game</button>
+                <button class="btn btn-secondary" onclick="hideVictory()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/game.js"></script>
+    <script src="js/ui.js"></script>
+</body>
+</html>
